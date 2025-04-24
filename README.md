@@ -107,24 +107,24 @@ These samples demonstrate the input and output for the app's functionality.
 
 ### Backend Framework
 
-- **Flask**: Powers the web app with routes for uploading videos/shirts, processing, and downloads. Uses render_template for dynamic HTML rendering and send_from_directory for file delivery.
+- **Flask**: Powers the web app with routes for uploading videos/shirts, processing, and downloads. Uses <code>render_template</code> for dynamic HTML rendering and <code>send_from_directory</code> for file delivery.
 
-- **Dynamic Shirt Management**: Shirt images are stored in Resources/Shirts and fetched dynamically via get_shirt_list() for real-time updates.
+- **Dynamic Shirt Management**: Shirt images are stored in <code>Resources/Shirts</code> and fetched dynamically via <code>get_shirt_list()</code> for real-time updates.
 
 ### Pose Detection & Advanced Image Processing
-- **Pose Detection**: Leverages cvzone.PoseModule to detect body landmarks (shoulders, hips) for precise clothing placement.
+- **Pose Detection**: Leverages <code>cvzone.PoseModule</code> to detect body landmarks (shoulders, hips) for precise clothing placement.
 
-- **Perspective Transformation**: Uses cv2.getPerspectiveTransform and cv2.warpPerspective to warp clothing images onto the user’s body based on detected landmarks, ensuring realistic alignment.
+- **Perspective Transformation**: Uses <code>cv2.getPerspectiveTransform</code> and <code>cv2.warpPerspective</code> to warp clothing images onto the user’s body based on detected landmarks, ensuring realistic alignment.
 
-- **Green Screen Removal**: The overlay_transparent function removes green backgrounds from clothing images while applying semi-transparency for natural blending.
+- **Green Screen Removal**: The <code>overlay_transparent</code> function removes green backgrounds from clothing images while applying semi-transparency for natural blending.
 
 ### File Handling & Storage
-- **Filesystem Storage**: Uploaded videos and processed outputs are stored in static/uploads and static/processed, respectively. Filenames include timestamps to avoid collisions.
+- **Filesystem Storage**: Uploaded videos and processed outputs are stored in <code>static/uploads</code> and <code>static/processed</code>, respectively. Filenames include timestamps to avoid collisions.
 
-- **Direct File Serving**: Processed videos are served directly from the filesystem using send_from_directory, eliminating the need for a database.
+- **Direct File Serving**: Processed videos are served directly from the filesystem using <code>send_from_directory</code>, eliminating the need for a database.
 
 ### Video Processing Pipeline
-1. **Frame Capture**: Video frames are extracted using cv2.VideoCapture.
+1. **Frame Capture**: Video frames are extracted using <code>cv2.VideoCapture</code>.
 
 2. **Landmark Detection**: Shoulder/hip landmarks are identified to define target regions for clothing placement.
 
@@ -136,31 +136,31 @@ These samples demonstrate the input and output for the app's functionality.
 
 4. **Transparency Blending**: Overlays the warped clothing onto each frame with adjustable opacity and green-screen removal.
 
-5. **Video Reconstruction**: Compiled into an MP4 file using cv2.VideoWriter.
+5. **Video Reconstruction**: Compiled into an MP4 file using <code>cv2.VideoWriter</code>.
 
 ### Key Features
 
-- **Dynamic Shirt Uploads**: Users can upload new clothing images (PNG/JPG) via /upload_shirt, which are immediately available for try-on.
+- **Dynamic Shirt Uploads**: Users can upload new clothing images (PNG/JPG) via <code>/upload_shirt</code>, which are immediately available for try-on.
 
 - **Error Handling**: Basic checks for file validity and pose detection failures, with JSON error responses for API routes.
 
-- **Environment Configuration**: Uses python-dotenv for environment variables (if needed), though PostgreSQL integration is currently inactive.
+- **Environment Configuration**: Uses <code>python-dotenv</code> for environment variables (if needed), though PostgreSQL integration is currently inactive.
 
 ### Dependencies
 - **Core Libraries**:
     
-    - Flask: Web framework.
+    - <code>Flask</code>: Web framework.
     
-    - OpenCV (cv2): Video/image processing.
+    - <code>OpenCV (cv2)</code>: Video/image processing.
     
-    - cvzone: Pose detection utilities.
+    - <code>cvzone</code>: Pose detection utilities.
     
-    - python-dotenv: Environment variable management (optional).
+    - <code>python-dotenv</code>: Environment variable management (optional).
 
-- **Runtime**: Requires psycopg2 (though not actively used here) and numpy for array operations.
+- **Runtime**: Requires <code>psycopg2</code> (though not actively used here) and <code>numpy</code> for array operations.
 
 ### Deployment Notes
-- **Development Mode**: Runs with <code> debug=True </code> for easy testing (not suitable for production).
+- **Development Mode**: Runs with <code>debug=True</code> for easy testing (not suitable for production).
 
 - **Scalability**: Designed for filesystem storage, making it deployable to platforms like Heroku or Render with ephemeral storage. For production, consider cloud storage (AWS S3) and a task queue (Celery) for video processing.
 
