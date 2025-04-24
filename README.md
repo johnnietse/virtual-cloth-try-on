@@ -160,7 +160,7 @@ These samples demonstrate the input and output for the app's functionality.
 - **Runtime**: Requires psycopg2 (though not actively used here) and numpy for array operations.
 
 ### Deployment Notes
-- **Development Mode**: Runs with <pre> debug=True </pre> for easy testing (not suitable for production).
+- **Development Mode**: Runs with <code> debug=True </code> for easy testing (not suitable for production).
 
 - **Scalability**: Designed for filesystem storage, making it deployable to platforms like Heroku or Render with ephemeral storage. For production, consider cloud storage (AWS S3) and a task queue (Celery) for video processing.
 
