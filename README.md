@@ -100,3 +100,66 @@ These samples demonstrate the input and output for the app's functionality.
 
 ## 📸 Screenshot
 ![virtual-try-on](https://github.com/user-attachments/assets/abc117df-a0ee-4a15-ac30-6964c31e48e4)
+
+---
+
+## Technical Overview (Updated)
+
+Backend Framework
+Flask: Powers the web app with routes for uploading videos/shirts, processing, and downloads. Uses render_template for dynamic HTML rendering and send_from_directory for file delivery.
+
+Dynamic Shirt Management: Shirt images are stored in Resources/Shirts and fetched dynamically via get_shirt_list() for real-time updates.
+
+Pose Detection & Advanced Image Processing
+Pose Detection: Leverages cvzone.PoseModule to detect body landmarks (shoulders, hips) for precise clothing placement.
+
+Perspective Transformation: Uses cv2.getPerspectiveTransform and cv2.warpPerspective to warp clothing images onto the user’s body based on detected landmarks, ensuring realistic alignment.
+
+Green Screen Removal: The overlay_transparent function removes green backgrounds from clothing images while applying semi-transparency for natural blending.
+
+File Handling & Storage
+Filesystem Storage: Uploaded videos and processed outputs are stored in static/uploads and static/processed, respectively. Filenames include timestamps to avoid collisions.
+
+Direct File Serving: Processed videos are served directly from the filesystem using send_from_directory, eliminating the need for a database.
+
+Video Processing Pipeline
+Frame Capture: Video frames are extracted using cv2.VideoCapture.
+
+Landmark Detection: Shoulder/hip landmarks are identified to define target regions for clothing placement.
+
+Dynamic Clothing Adjustment:
+
+Bounding Box Scaling: Expands the clothing region using a scaling factor for better coverage.
+
+Perspective Warping: Warps the clothing image to match the user’s pose using a computed transformation matrix.
+
+Transparency Blending: Overlays the warped clothing onto each frame with adjustable opacity and green-screen removal.
+
+Video Reconstruction: Compiled into an MP4 file using cv2.VideoWriter.
+
+Key Features
+Dynamic Shirt Uploads: Users can upload new clothing images (PNG/JPG) via /upload_shirt, which are immediately available for try-on.
+
+Error Handling: Basic checks for file validity and pose detection failures, with JSON error responses for API routes.
+
+Environment Configuration: Uses python-dotenv for environment variables (if needed), though PostgreSQL integration is currently inactive.
+
+Dependencies
+Core Libraries:
+
+Flask: Web framework.
+
+OpenCV (cv2): Video/image processing.
+
+cvzone: Pose detection utilities.
+
+python-dotenv: Environment variable management (optional).
+
+Runtime: Requires psycopg2 (though not actively used here) and numpy for array operations.
+
+Deployment Notes
+Development Mode: Runs with debug=True for easy testing (not suitable for production).
+
+Scalability: Designed for filesystem storage, making it deployable to platforms like Heroku or Render with ephemeral storage. For production, consider cloud storage (AWS S3) and a task queue (Celery) for video processing.
+
+This revised technical overview reflects the current codebase’s focus on filesystem-based storage, advanced perspective warping, and dynamic clothing management. 
